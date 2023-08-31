@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@thirdweb-dev/contracts/base/ERC721Base.sol";
 // import "@thirdweb-dev/contracts/extension/DelayReveal.sol";
 
-contract MyContract is ERC721Base, { //TODO: Add DelayedReveal to the contracts implicits
+contract MyContract is ERC721Base { //TODO: Add DelayedReveal to the contracts implicits
 
     constructor(
         address _defaultAdmin,
