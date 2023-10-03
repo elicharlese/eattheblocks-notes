@@ -126,9 +126,12 @@ Restrictions on the child token of a 7-day challenge period. These are the risk-
 
 ![Alt text](image-28.png)
 
+<<<<<<< Updated upstream
 ### ERC 20 Flow
 
 ![Alt text](image-29.png)
 ![Alt text](image-30.png)
 
 ![Alt text](image-31.png)
+=======
+>>>>>>> Stashed changes
