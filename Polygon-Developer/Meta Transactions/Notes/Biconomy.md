@@ -33,11 +33,16 @@ In order to make sure that it is working we will have to add the URL to our Bico
 ![Alt text](image-25.png)
 ![Alt text](image-26.png)
 
-Adding limits
+### Adding limits
 ![Alt text](image-27.png)
 
 Should show nonce: 1, since we have already interacted with this transaction before.
 
+### Add custom API
+![Alt text](image-28.png)
+![Alt text](image-29.png)
 
-
+Means that even if I have zero MATIC I can still call the contract.
+![Alt text](image-30.png)
+![Alt text](image-32.png)
 
