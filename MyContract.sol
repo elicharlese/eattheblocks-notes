@@ -191,11 +191,79 @@ contract MyStruct {
     //3. Array of struct
     //4. Mapping of struct
 
-    
     //1. declare struct
-    
+    struct user {
+        address addr;
+        uint score;
+        string name;
+    }
+
+    // Create array
+    User[] users;
+
+    // Create mapping
+    mapping(address => User) userList2;
     
     //2. CRUD
-    //3. Array of struct
-    //4. Mapping of struct
+    function foo(string calldata _name) external {
+        User memory user1 = User(msg.sender, 0, _name); // Create
+        User memory user2 = User(msg.sender, 0, _name);
+        User memory user3 = User(name: _name, score: 0, address: msg.sender); // more verbose
+        user3.addr; // Read
+        user3.score = 10; // Update
+        delete user1; // Delete
+        //3. Array of struct
+        users.push(User(...)); // directly put in parameters or...
+        user.push(user1); // create before hand and pass through
+        
+        //4. Mapping of struct
+        userList2[msg.sender] = user2;
+        userList2[msg.sender] = User(); // directly put in parameters...
+    }
+}
+
+contract myEvent {
+    // Allows smart contract to push data to the blockchain and webapps
+    // 2 step process
+
+    event NewTrade (
+        uint date,
+        address indexed from, // more expensive in ETH; you can use a max of 3
+        address indexed to,
+        uint amount,
+    );
+
+    function trade(address to, uint amount) external {
+        emit NewTrade(now, msg.sender, to, amount);
+    }
+
+    // Smart contracts cannot read events from the past
+    // Smart contracts cannot read them
+    // Not a storage variable
+    // One-way process
+    // Gas cost is lower than storage variables
+}
+
+contract A {
+    //1. call function of other contract
+    // Interface of B => B
+
+    // address of B
+    address addressB; 
+    
+    //2. import keyword
+    
+    //3. contract interface
+    
+    //4. error propagation
+    
+}
+
+contract B {
+    function helloWorld() external pure() {
+        // `pure` like `view` is for read-only functions, except
+        // they return some static data, not read from blockchain
+        return 'HelloWorld';
+        
+    }
 }
