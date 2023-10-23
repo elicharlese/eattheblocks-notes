@@ -1,5 +1,8 @@
 pragma solidity ^0.6.0;
 
+// 2. import keyword
+import 'ContractB.sol';
+
 contract MyContract {
     // Make sure the compiler has a check mark
     uint data;
@@ -24,7 +27,6 @@ contract MyContract {
         data = _data;
     }
 
-    
     // The contracts will be running on the JVM using ganache
     // A test blockchain for developers which is totally separate from the mainnet on Ethereum
 
@@ -44,27 +46,24 @@ contract MyContract {
 
 
     // After you change code on your smart contract you need to redeploy to interact with the new version.
-    
-    
+
+
     // -------------- Control Strcutures
 
     bool boolValue;
     function foo() external {
         if (! boolValue) {
-            
         } else {
-        // (msg.sender == 100) 
+        // (msg.sender == 100)
         // No such things as a strict comparison
         // && and
         // || whole thing is true
         }
-        
+
         for(uint i = 0; i < 10; i ++) {
-            i = 0...9    
+            // i = 0...9
         }
-        
         bool isOk = true;
-        
         while(isOk == false) {
             // not possible to have an infiite loop in solidity it just wont work
             // while loops while the condition is true
@@ -76,7 +75,6 @@ contract MyContract {
     }
     // --------------- Array
     // Can only contain elements of the same type
-    
     //1. storage arrays (actually stored inside the blockchain)
     //2. memory arrays (temporary only exists while you are interacting with the smart contract)
     //3. array arguments and return arrays from function
@@ -100,12 +98,12 @@ contract MyContract {
         }
         uint[2] myArrayS; // It is possible to declare the length of the array before
         // However we will lose access the push method
-        uint[] myArrayD; // This is a dynamic array    
-    }   
+        uint[] myArrayD; // This is a dynamic array
+    }
 
     // 2. Memory Arrays
     // Memory arrays have to be decalred with a specific size
-    
+
     function bar() external {
         uint[] memory newArray = new uint[](10);
         // Cannot use .push()
@@ -124,9 +122,7 @@ contract MyContract {
         // with external we use calldata
         // with public & internal we use memory
         // if we want to return an array from a fn we use returns(uint[] memory)
-    }
     // function fooBar(uint[] memory myArg) internal returns(uint[]  memory) {
-    }  
 }
 
 contract Mappings {
@@ -161,22 +157,22 @@ contract Mappings {
         //4 - Delete
         delete balances[msg.sender];
     }
-    
+
     //3. Default values
     // All keys are accessible even the ones that do not exist
     // You will still get the default value
     balances[someAddressThatDoesNotExist] => 0
-        
+
     //4. Exotic mapping 1: nested mappings
     approved[msg.sender][approved] = true; // Create
     approved[msg.sender][approved]; // Read
     approved[msg.sender][approved] = false; // Update
     delete approved[msg.sender][approved]; // Delete
-    
+
     //5. Exotic mapping 2: array inside mapping
     scores[msg.sender].push(1); // Create
     scores[msg.sender][0]; // Read
-    scores[msg.sender] = 10; // Update 
+    scores[msg.sender] = 10; // Update
     delete scores[msg.sender][0]; // Delete
 }
 
@@ -185,7 +181,7 @@ contract MyStruct {
     // Same template, different fields for different instances
     // Similar to classes in javascript
     // You can only define fields not methods
-    
+
     //1. declare struct
     //2. CRUD
     //3. Array of struct
@@ -203,7 +199,7 @@ contract MyStruct {
 
     // Create mapping
     mapping(address => User) userList2;
-    
+
     //2. CRUD
     function foo(string calldata _name) external {
         User memory user1 = User(msg.sender, 0, _name); // Create
@@ -215,7 +211,7 @@ contract MyStruct {
         //3. Array of struct
         users.push(User(...)); // directly put in parameters or...
         user.push(user1); // create before hand and pass through
-        
+
         //4. Mapping of struct
         userList2[msg.sender] = user2;
         userList2[msg.sender] = User(); // directly put in parameters...
@@ -255,23 +251,11 @@ contract A {
     }
 
     function callHelloWorld() external view returns(string memory) {
-        B b = B(addressB);
+        InterfaceB b = InterfaceB(addressB);
         return b.helloWorld();
     }
-    
-    //2. import keyword
-    
-    //3. contract interface
-    
+    //2. import keyword (line 3)
+    //3. contract interface (contractB.sol: line 4)
     //4. error propagation
-    
-}
 
-contract B {
-    function helloWorld() external pure() {
-        // `pure` like `view` is for read-only functions, except
-        // they return some static data, not read from blockchain
-        return 'HelloWorld';
-        
-    }
 }
