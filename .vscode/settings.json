@@ -1,3 +1,4 @@
 {
-  "git-blame.gitWebUrl": ""
+  "git-blame.gitWebUrl": "",
+  "solidity.compileUsingRemoteVersion": "v0.6.1+commit.e6f7d5a4"
 }
