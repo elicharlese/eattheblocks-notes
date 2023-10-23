@@ -247,9 +247,17 @@ contract myEvent {
 contract A {
     //1. call function of other contract
     // Interface of B => B
-
     // address of B
-    address addressB; 
+    address addressB;
+
+    function setAddressB(address _addressB) external {
+        addressB = _addressB;
+    }
+
+    function callHelloWorld() external view returns(string memory) {
+        B b = B(addressB);
+        return b.helloWorld();
+    }
     
     //2. import keyword
     
