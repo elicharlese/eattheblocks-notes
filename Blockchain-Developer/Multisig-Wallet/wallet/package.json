@@ -1,7 +1,6 @@
 {
   "name": "wallet",
   "version": "1.0.0",
-  "description": "",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -12,6 +11,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-  }
+  "description": ""
 }
