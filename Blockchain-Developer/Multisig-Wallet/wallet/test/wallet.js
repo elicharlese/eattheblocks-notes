@@ -30,4 +30,19 @@ contract('Wallet', (accounts) => {
         // assert(quorum === 2) // This will fail bc we don't have js number but it is wrapped in a BN.js
         assert(quorum.toNumber() === 2); // we can also try to string and wrap our number in ''
     });
+
+    it('should create transfers', async () => {
+        // This will capture the transaction reciept
+        await wallet.createTransfer(100, accounts[5], { from: accounts[0] }); // approver address 
+        // This section will test all of the arguments in an Transfer struct
+        const transfers = await wallet.getTransfers();
+        assert(transfers.length === 1);
+        assert(transfers[0].id === '0');
+        assert(transfers[0].amount === '100');
+        assert(transfers[0].to === accounts[5]);
+        assert(transfers[0].approvals === '0');
+        assert(transfers[0].sent === false);
+        // Numbers that are fields of struct are not wrapped in BN.js objects,
+        // but are string instead...Need to change the way we compare numbers...
+    });
 });
