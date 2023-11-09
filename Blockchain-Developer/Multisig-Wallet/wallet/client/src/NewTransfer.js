@@ -29,7 +29,7 @@ function NewTransfer() {
         type="text"
         onChange={e => updateTransfer(e, 'to')}
       />
-      <button>Submit
+      <button type="submit">Submit</button>
     </form>
     </div>
   );

@@ -45,4 +45,57 @@ contract('Wallet', (accounts) => {
         // Numbers that are fields of struct are not wrapped in BN.js objects,
         // but are string instead...Need to change the way we compare numbers...
     });
+    
+    it('should NOT create transfers if sender is not approved', async () => {
+        await expectRevert(
+            wallet.createTransfer(100, accounts[5], {from: accounts[4]}),
+            'only approver allowed'
+        );
+    });
+    
+    it('should increment approvals', async () => {
+        await wallet.createTransfer(100, accounts[5], {from: accounts[0]});
+        await wallet.approveTransfer(0, {from: accounts[0]});
+        const transfers = await wallet.getTransfers();
+        const balance = await wallet.getBalance(wallet.address);
+        assert(transfers[0].approvals == '1');
+        assert(transfers[0].sent === false);
+        assert(balance == '1000');
+    });
+
+    it('should send transfer if quorum is reached', async () => {
+        const balanceBefore = web3.utils.toBN(await web3.eth.getBalance(accounts[6]));
+        await wallet.createTransfer(100, accounts[5], {from: accounts[0]});
+        await wallet.approveTransfer(0, {from: accounts[0]});
+        await wallet.approveTransfer(0, {from: accounts[1]});
+        const balanceAfter = web3.utils.toBN(await web3.eth.getBalance(accounts[6]));
+        assert(balanceAfter.sub(balanceBefore).toNumber() === 100);
+    });
+
+    it('should NOT approve transfer sender is not approved', async () => {
+        await wallet.createTransfer(100, accounts[5], {from: accounts[0]});
+        await expectRevert(
+            wallet.approveTransfer(0, {from: accounts[4]}),
+            'only approver allowed'
+        );
+    });
+
+    it('should NOT approve transfer if transfer is already sent', async () => {
+        await wallet.createTransfer(100, accounts[6], {from: accounts[0]});
+        await wallet.approveTransfer(0, {from: accounts[0]});
+        await wallet.approveTransfer(0, {from: accounts[1]});
+        await expectRevert(
+            wallet.approveTransfer(0, {from: accounts[2]}),
+            'transfer has already been sent'
+        );
+    });
+
+    it('should NOT approve transfer twice', async () => {
+        await wallet.createTransfer(100, accounts[5], {from: accounts[0]});
+        await wallet.approveTransfer(0, {from: accounts[0]});
+        await expectRevert(
+            wallet.approveTransfer(0, {from: accounts[0]}),
+            'cannot approve transfer twice'
+        );
+    });
 });

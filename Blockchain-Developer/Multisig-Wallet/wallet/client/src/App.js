@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const init = async () => {
       /* Storing the variables */
-      const web3 = getWeb3();
+      const web3 = await getWeb3();
       const accounts = await web3.eth.getAccounts();
       const wallet = await getWallet(web3);
       /* Accessing the smart contract methods */
@@ -43,7 +43,8 @@ function App() {
 
   const approveTransfer = transfer => {
     wallet.methods
-      .
+      .approveTransfer(transferId)
+      .send({from: accounts[0]});
   }
 
   if (
@@ -58,10 +59,11 @@ function App() {
   
   return (
     <div>
-      Multisig Dapp
+      <h1>Multisig Dapp</h1>
       <Header approvers={approvers} quorum={quorum} />
       <NewTransfer createTransfer={createTransfer} />
-      <TransferList transfers={transfers} />
+      <TransferList transfers={transfers} createTransfer={createTransfer} />
+      <Button></Button>
     </div>
   );
 }
