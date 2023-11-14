@@ -9,8 +9,8 @@ contract Dex {
     using SafeMath for uint;
        
     enum Side {
-        BUY,
-        SELL
+        BUY, // numerical value: 0
+        SELL // numerical value: 1
     }
     
     struct Token {
